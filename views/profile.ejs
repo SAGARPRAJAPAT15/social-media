@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Social Feed</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(135deg, #eef2ff, #fdf2f8);
+      color: #1e293b;
+      min-height: 100vh;
+      padding: 35px 16px;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: auto;
+    }
+
+    /* Header */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .logo {
+      font-size: 27px;
+      font-weight: 800;
+      color: #4f46e5;
+      letter-spacing: -1px;
+    }
+
+    .logout {
+      text-decoration: none;
+      background: #fff;
+      color: #e11d48;
+      border: 1px solid #fecdd3;
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .logout:hover {
+      background: #e11d48;
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* Welcome section */
+    .welcome {
+      background: linear-gradient(135deg, #4f46e5, #9333ea);
+      color: white;
+      padding: 30px;
+      border-radius: 22px;
+      margin-bottom: 25px;
+      box-shadow: 0 12px 30px #6366f133;
+    }
+
+    .welcome h1 {
+      font-size: clamp(23px, 5vw, 32px);
+      margin-bottom: 8px;
+    }
+
+    .welcome p {
+      color: #e0e7ff;
+      font-size: 15px;
+    }
+
+    /* Common card */
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 25px;
+      border-radius: 20px;
+      margin-bottom: 22px;
+      box-shadow: 0 8px 25px rgba(15, 23, 42, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .card h2 {
+      font-size: 21px;
+      margin-bottom: 18px;
+      color: #1e1b4b;
+    }
+
+    /* Create post */
+    textarea {
+      display: block;
+      width: 100%;
+      min-height: 125px;
+      resize: vertical;
+      padding: 16px;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      font: inherit;
+      font-size: 15px;
+      outline: none;
+      background: #f8fafc;
+      margin-bottom: 15px;
+      transition: 0.25s;
+    }
+
+    textarea:focus {
+      border-color: #818cf8;
+      background: white;
+      box-shadow: 0 0 0 4px #6366f11a;
+    }
+
+    .submit-btn {
+      border: none;
+      padding: 12px 23px;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 18px #4f46e544;
+    }
+
+    /* Individual post */
+    .post {
+      background: white;
+      padding: 23px;
+      border-radius: 18px;
+      margin-bottom: 17px;
+      border: 1px solid #e9eaf5;
+      box-shadow: 0 5px 18px rgba(15, 23, 42, 0.04);
+      transition: 0.3s;
+    }
+
+    .post:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.09);
+    }
+
+    .post h3 {
+      font-size: 16px;
+      color: #4f46e5;
+      margin-bottom: 13px;
+    }
+
+    .post p {
+      color: #475569;
+      line-height: 1.8;
+      font-size: 15px;
+      overflow-wrap: anywhere;
+      margin-bottom: 18px;
+    }
+
+    .post-actions {
+      display: flex;
+      gap: 12px;
+      padding-top: 14px;
+      border-top: 1px solid #f1f5f9;
+    }
+
+    .post-actions a {
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 9px 15px;
+      border-radius: 10px;
+      transition: 0.25s;
+    }
+
+    .like-btn {
+      color: #e11d48;
+      background: #fff1f2;
+    }
+
+    .like-btn:hover {
+      background: #e11d48;
+      color: white;
+    }
+
+    .edit-btn {
+      color: #4f46e5;
+      background: #eef2ff;
+    }
+
+    .edit-btn:hover {
+      background: #4f46e5;
+      color: white;
+    }
+
+    .section-title {
+      margin: 30px 0 18px;
+      font-size: 23px;
+      color: #1e1b4b;
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 480px) {
+      body {
+        padding: 22px 12px;
+      }
+
+      .welcome {
+        padding: 23px;
+      }
+
+      .card {
+        padding: 18px;
+      }
+
+      .post {
+        padding: 18px;
+      }
+
+      .logo {
+        font-size: 23px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <header class="topbar">
+      <div class="logo">Connect.</div>
+      <a href="/logout" class="logout">Logout ↗</a>
+    </header>
+
+    <section class="welcome">
+
+
+      <h1>Hello, <%= user.name %> 👋</h1>
+      <p>Share your thoughts and connect with your community.</p>
+    </section>
+
+    <section class="card">
+      <h2>✍️ Create a new post</h2>
+
+      <form action="/post" method="post">
+        <textarea
+          name="content"
+          placeholder="What's on your mind?"
+          required
+        ></textarea>
+
+        <button type="submit" class="submit-btn">
+          Publish Post →
+        </button>
+      </form>
+    </section>
+
+    <h2 class="section-title">🌟 All Posts</h2>
+
+   <% user.posts.forEach((post) => { %>
+
+  <div class="post">
+    <h3><%= user.name %></h3>
+
+    <p><%= post.content %></p>
+    <small><%= post.likes.length %> likes</small>
+
+    <div class="post-actions">
+      <a href="/like/<%= post._id %>" class="like-btn">♥ Like</a>
+      <!-- <a href="#" class="edit-btn">✎ Edit</a> -->
+    </div>
+  </div>
+
+<% }) %>
+
+  </div>
+</body>
+</html>
